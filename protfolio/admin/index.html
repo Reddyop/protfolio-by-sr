@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Sarthak Reddy</title>
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+
+    <div id="login-screen" class="login-overlay">
+        <div class="glass-card" style="width: 400px;">
+            <h2 style="text-align: center; margin-bottom: 20px;">Admin Login</h2>
+            <form id="login-form">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" class="btn" style="width: 100%;">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard" class="admin-container" style="display: none;">
+        <aside class="sidebar">
+            <h3 style="margin-bottom: 30px; color: var(--primary);">SR Admin</h3>
+            <button onclick="showTab('projects')" class="active">Projects</button>
+            <button onclick="showTab('blog')">Blog</button>
+            <button onclick="showTab('messages')">Messages</button>
+            <button onclick="showTab('content')">Site Content</button>
+            <button onclick="handleLogout()" style="margin-top: 50px; color: #ff4444;">Logout</button>
+        </aside>
+
+        <main class="main-content">
+            <div id="tab-projects" class="tab-content">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Manage Projects</h2>
+                    <button class="btn" onclick="openModal('project-modal')">+ Add Project</button>
+                </div>
+                <table class="data-table">
+                    <thead><tr><th>Title</th><th>Tech</th><th>Actions</th></tr></thead>
+                    <tbody id="projects-list"></tbody>
+                </table>
+            </div>
+
+            <div id="tab-blog" class="tab-content" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Manage Blog</h2>
+                    <button class="btn" onclick="openModal('blog-modal')">+ Add Post</button>
+                </div>
+                <table class="data-table">
+                    <thead><tr><th>Title</th><th>Date</th><th>Actions</th></tr></thead>
+                    <tbody id="blog-list"></tbody>
+                </table>
+            </div>
+
+            <div id="tab-messages" class="tab-content" style="display: none;">
+                <h2>Messages</h2>
+                <div id="messages-list" class="grid" style="grid-template-columns: 1fr; margin-top: 20px;"></div>
+            </div>
+
+            <div id="tab-content" class="tab-content" style="display: none;">
+                <h2>Homepage Content</h2>
+                <form id="content-form" class="glass-card" style="margin-top: 20px;">
+                    <label>Hero Tagline</label>
+                    <input type="text" id="edit-tagline">
+                    <label>About Text</label>
+                    <textarea id="edit-about" rows="5"></textarea>
+                    <button type="submit" class="btn">Save Changes</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <h3>Add New Project</h3>
+            <form id="add-project-form">
+                <input type="text" name="title" placeholder="Project Title" required>
+                <textarea name="description" placeholder="Description" required></textarea>
+                <input type="text" name="tech" placeholder="Tech Stack (comma separated)" required>
+                <input type="url" name="imageUrl" placeholder="Image URL (Optional)">
+                <input type="url" name="liveLink" placeholder="Live Link">
+                <input type="url" name="githubLink" placeholder="GitHub Link">
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn">Save</button>
+                    <button type="button" class="btn" onclick="closeModal('project-modal')" style="border-color: #555; color: #888;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="blog-modal" class="modal">
+        <div class="modal-content">
+            <h3>Add Blog Post</h3>
+            <form id="add-blog-form">
+                <input type="text" name="title" placeholder="Title" required>
+                <input type="text" name="subtitle" placeholder="Subtitle" required>
+                <textarea name="content" rows="5" placeholder="Content (HTML allowed)"></textarea>
+                <input type="number" name="readingTime" placeholder="Reading Time (mins)" required>
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn">Save</button>
+                    <button type="button" class="btn" onclick="closeModal('blog-modal')" style="border-color: #555; color: #888;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+    <script>
+        window.showTab = (tabId) => {
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            document.getElementById('tab-' + tabId).style.display = 'block';
+            document.querySelectorAll('.sidebar button').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+        };
+        window.openModal = (id) => document.getElementById(id).classList.add('open');
+        window.closeModal = (id) => document.getElementById(id).classList.remove('open');
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+/* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+    --bg: #050505;
+    --surface: #0a0a0a;
+    --primary: #00ff88;
+    --secondary: #7000ff;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --glow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Custom Cursor */
+.cursor-dot, .cursor-outline {
+    position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+    border-radius: 50%; z-index: 9999; pointer-events: none;
+}
+.cursor-dot { width: 8px; height: 8px; background: var(--primary); }
+.cursor-outline { width: 40px; height: 40px; border: 1px solid var(--primary); transition: all 0.2s ease-out; }
+
+/* Typography & Layout */
+h1, h2, h3 { font-weight: 800; text-transform: uppercase; letter-spacing: -1px; }
+.gradient-text {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+section { padding: 100px 0; position: relative; }
+
+/* Glassmorphism Components */
+.glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--glow);
+    border-color: var(--primary);
+}
+
+/* Magnetic Button */
+.btn {
+    padding: 15px 40px;
+    border: 1px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    display: inline-block;
+    text-decoration: none;
+    cursor: none;
+}
+.btn::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--primary); z-index: -1; transform: scaleX(0); transform-origin: right;
+    transition: transform 0.4s ease;
+}
+.btn:hover { color: var(--bg); box-shadow: var(--glow); }
+.btn:hover::before { transform: scaleX(1); transform-origin: left; }
+
+/* Loader */
+#loader {
+    position: fixed; inset: 0; background: var(--bg); z-index: 10000;
+    display: flex; justify-content: center; align-items: center;
+}
+.loader-text { font-size: 2rem; font-weight: bold; letter-spacing: 5px; }
+
+/* Hero */
+.hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+.hero-content h1 { font-size: 5rem; line-height: 1.1; margin-bottom: 20px; }
+.hero-content p { font-size: 1.2rem; color: var(--text-dim); margin-bottom: 40px; }
+
+/* Grids */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.skill-tag {
+    display: inline-block; padding: 8px 16px; margin: 5px;
+    border: 1px solid var(--glass-border); border-radius: 20px; font-size: 0.9rem;
+}
+
+/* Navbar */
+nav {
+    position: fixed; top: 0; width: 100%; padding: 20px; z-index: 1000;
+    background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(10px);
+    display: flex; justify-content: space-between; align-items: center;
+}
+.nav-links a { color: var(--text); text-decoration: none; margin-left: 30px; font-size: 0.9rem; text-transform: uppercase; }
+
+/* Forms */
+input, textarea {
+    width: 100%; padding: 15px; background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border); color: white; margin-bottom: 20px;
+    border-radius: 8px; font-family: inherit; outline: none;
+}
+input:focus, textarea:focus { border-color: var(--primary); }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 3rem; }
+    .nav-links { display: none; } 
+}
+/* --- Add to the end of style.css --- */
+
+/* About Section Specific Styles */
+.about-grid {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+/* Image container wrapper */
+.about-img-wrapper {
+    flex-shrink: 0; /* Prevents image from getting squished */
+    position: relative;
+}
+
+/* The profile photo styling */
+.about-profile-img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover; /* Ensures image fills the circle without stretching */
+    border-radius: 50%; /* Makes it circular */
+    border: 3px solid rgba(0, 255, 136, 0.5); /* Semi-transparent primary border */
+    /* Dual shadow for premium neon depth */
+    box-shadow: 
+        0 0 20px rgba(0, 255, 136, 0.2),
+        inset 0 0 20px rgba(0, 255, 136, 0.1);
+    transition: all 0.4s ease;
+}
+
+.about-profile-img:hover {
+    transform: scale(1.03) rotate(-2deg); /* Subtle tilt on hover */
+    border-color: var(--primary);
+    box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.4),
+        inset 0 0 30px rgba(0, 255, 136, 0.2);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 900px) {
+     /* Change flex direction to stack vertically */
+    .about-grid {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    /* Make the image slightly smaller on mobile */
+    .about-profile-img {
+        width: 200px;
+        height: 200px;
+    }
+
+    /* Center the signature on mobile */
+    .about-text-wrapper div {
+        justify-content: center;
+        display: flex;
+    }
+}
